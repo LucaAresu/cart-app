@@ -2,9 +2,11 @@
 
 namespace Unit\Services;
 
+use App\Models\User;
 use App\Services\Cart;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class CartTest extends TestCase
@@ -31,25 +33,39 @@ class CartTest extends TestCase
      *
      * @return void
      */
-    public function testDeleteNotFoundUser()
+    public function testDeleteCartNotFound()
     {
-        $cart = $this->cart->create('test');
-        $this->assertDatabaseMissing('carts', ['id' => $cart->id + 1]);
-        $this->expectException(ModelNotFoundException::class);
-        $this->cart->delete($cart->id + 1);
+        $user = User::factory()->create();
+
+        $this->expectException(ValidationException::class);
+        $this->cart->delete(1, $user->id);
     }
 
-    public function testDeleteUser()
+    public function testDeleteCartOfOtherUser()
     {
-        $cart = $this->cart->create('test');
+        $user1 = User::factory()->hasCarts(1)->create();
+        $user2 = User::factory()->create();
+
+        $this->expectException(ValidationException::class);
+        $this->cart->delete($user1->carts()->first()->id, $user2->id);
+    }
+
+    public function testDeleteCartSuccess()
+    {
+        $user = User::factory()->hasCarts(1)->create();
+        $cart = $user->carts()->first();
+
         $this->assertDatabaseHas('carts', ['id' => $cart->id]);
-        $this->assertEquals(true, $this->cart->delete($cart->id));
+        $this->assertEquals(true, $this->cart->delete($cart->id, $user->id));
+        $this->assertModelMissing($cart);
     }
 
-    public function testCreateUser()
+    public function testCreateCart()
     {
+        $user = User::factory()->create();
 
-
+        $cart = $this->cart->create('name', $user->id);
+        $this->assertModelExists($cart);
     }
 
 
