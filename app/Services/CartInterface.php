@@ -19,4 +19,18 @@ interface CartInterface
      */
     public function delete(string|int $id, string|int $userId) : bool;
 
+
+    /**
+     * @param \App\Models\Cart $cart
+     * @param array $skus
+     * @return \App\Models\Cart
+     */
+    public function addProducts(\App\Models\Cart $cart, array $productIds) : \App\Models\Cart;
+
+    /**
+     * @param \App\Models\Cart $cart
+     * @param array $skus
+     * @return \App\Models\Cart
+     */
+    public function removeProducts(\App\Models\Cart $cart, array $productIds) : \App\Models\Cart;
 }

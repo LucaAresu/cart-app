@@ -10,7 +10,7 @@ class AuthControllerTest extends \Tests\TestCase
 
     use RefreshDatabase;
 
-    const ROUTE = '/api/user/';
+    const ROUTE = '/api/V1/user/';
 
     public function testLoginSuccess()
     {

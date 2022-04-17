@@ -19,12 +19,17 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
-Route::post('/user/register', [\App\Http\Controllers\AuthController::class, 'register']);
-Route::post('/user/login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/V1/user/register', [\App\Http\Controllers\AuthController::class, 'register']);
+Route::post('/V1/user/login', [\App\Http\Controllers\AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::post('/cart', [\App\Http\Controllers\CartController::class, 'create']);
-    Route::delete('/cart', [\App\Http\Controllers\CartController::class, 'delete']);
-    Route::post('/user/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+    Route::post('/V1/cart', [\App\Http\Controllers\CartController::class, 'create']);
+    Route::delete('/V1/cart', [\App\Http\Controllers\CartController::class, 'delete']);
+    Route::get('/V1/cart/{cart}', [\App\Http\Controllers\CartController::class, 'show']);
+    Route::get('/V1/carts', [\App\Http\Controllers\CartController::class, 'getList']);
 
+    Route::post('/V1/cart/products', [\App\Http\Controllers\Cart\ProductController::class, 'addProducts']);
+    Route::delete('/V1/cart/products', [\App\Http\Controllers\Cart\ProductController::class, 'removeProducts']);
+
+    Route::post('/V1/user/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 });

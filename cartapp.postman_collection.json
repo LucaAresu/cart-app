@@ -9,6 +9,102 @@
 			"name": "Cart",
 			"item": [
 				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Add",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "cart",
+											"value": "1",
+											"type": "default"
+										},
+										{
+											"key": "skus[]",
+											"value": "example-sku",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-url}}/cart/products",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"cart",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "cart",
+											"value": "1",
+											"type": "default"
+										},
+										{
+											"key": "skus[]",
+											"value": "example-sku",
+											"type": "default"
+										},
+										{
+											"key": "_method",
+											"value": "delete",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base-url}}/cart/products",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"cart",
+										"products"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Create",
 					"event": [
 						{
@@ -44,6 +140,17 @@
 									"key": "name",
 									"value": "fsafsafas",
 									"type": "default"
+								},
+								{
+									"key": "skus[]",
+									"value": "example-sku",
+									"type": "default"
+								},
+								{
+									"key": "skus",
+									"value": "2",
+									"type": "default",
+									"disabled": true
 								}
 							]
 						},
@@ -110,6 +217,61 @@
 							],
 							"path": [
 								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/cart/1",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"cart",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/carts",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"carts"
 							]
 						}
 					},
@@ -296,7 +458,7 @@
 	"variable": [
 		{
 			"key": "base-url",
-			"value": "0.0.0.0/api",
+			"value": "0.0.0.0/api/V1",
 			"type": "default"
 		}
 	]
