@@ -52,6 +52,6 @@ class ProductController extends AbstractApiController
 
         $this->cart->removeProducts($cart, $this->getProductIds($data['skus']));
 
-        return $this->getValidResponse(['message' => 'Product added successfully']);
+        return $this->getValidResponse(['message' => 'Product removed successfully']);
     }
 }
