@@ -78,11 +78,17 @@ class Cart implements CartInterface
     }
 
     /**
-     * @inheritdoc
+     * @param \App\Models\Cart $cart
+     * @param array $productIds
+     * @return bool
+     * @throws ValidationException
      */
-    public function removeProducts(\App\Models\Cart $cart, array $productIds): \App\Models\Cart
+    public function removeProducts(\App\Models\Cart $cart, array $productIds) : bool
     {
         $cart->products()->detach($productIds);
-        return $cart;
+        if (! $cart->products()->count()) {
+            $this->delete($cart->id, $cart->user->id);
+        }
+        return true;
     }
 }

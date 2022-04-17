@@ -105,7 +105,7 @@ class CartTest extends TestCase
         $this->cart->addProducts($cart, [1]);
     }
 
-    public function testRemoveProduct()
+    public function testRemoveProductAndDeleteCart()
     {
         $user = User::factory()->hasCarts(1)->create();
         $product = Product::factory()->create();
@@ -122,8 +122,29 @@ class CartTest extends TestCase
             'product_id' => $product->id,
             'cart_id' => $cart->id
         ]);
+        $this->assertSoftDeleted($cart);
     }
+    public function testRemoveProduct()
+    {
+        $user = User::factory()->hasCarts(1)->create();
+        $products = Product::factory(2)->create();
+        $product = $products->first();
 
+        $cart = $user->carts()->first();
+        $cart->products()->attach($products);
+
+        $this->assertDatabaseHas('cart_product', [
+            'product_id' => $product->id,
+            'cart_id' => $cart->id
+        ]);
+        $this->cart->removeProducts($cart, [$product->id]);
+        $this->assertDatabaseMissing('cart_product', [
+            'product_id' => $product->id,
+            'cart_id' => $cart->id
+        ]);
+        $this->assertModelExists($cart);
+    }
+    
     public function testRemoveProductDontExist()
     {
         $user = User::factory()->hasCarts(1)->create();

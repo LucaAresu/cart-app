@@ -32,5 +32,5 @@ interface CartInterface
      * @param array $skus
      * @return \App\Models\Cart
      */
-    public function removeProducts(\App\Models\Cart $cart, array $productIds) : \App\Models\Cart;
+    public function removeProducts(\App\Models\Cart $cart, array $productIds) : bool;
 }
