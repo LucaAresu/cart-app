@@ -23,5 +23,4 @@ class ProductTest extends \Tests\TestCase
             'cart_id' => $cart->id
         ]);
     }
-
 }

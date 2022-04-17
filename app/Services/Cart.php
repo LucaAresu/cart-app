@@ -67,7 +67,7 @@ class Cart implements CartInterface
             ]
         );
 
-        $cartProductIds = $cart->products()->get()->map(fn($product) => $product->id)->toArray();
+        $cartProductIds =  $this->getCartProductsIds($cart);
         $productIds = array_filter(
             callback: fn($id) => (! in_array($id, $cartProductIds)),
             array: $productIds
@@ -85,10 +85,21 @@ class Cart implements CartInterface
      */
     public function removeProducts(\App\Models\Cart $cart, array $productIds) : bool
     {
+        $cartProductIds = $this->getCartProductsIds($cart);
+
+        $productIds = array_filter(
+            callback: fn($id) => (in_array($id, $cartProductIds)),
+            array: $productIds
+        );
         $cart->products()->detach($productIds);
         if (! $cart->products()->count()) {
             $this->delete($cart->id, $cart->user->id);
         }
         return true;
+    }
+
+    protected function getCartProductsIds(\App\Models\Cart $cart) : array
+    {
+        return $cart->products()->get()->map(fn($product) => $product->id)->toArray();
     }
 }

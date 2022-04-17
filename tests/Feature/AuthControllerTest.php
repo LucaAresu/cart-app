@@ -15,7 +15,7 @@ class AuthControllerTest extends \Tests\TestCase
     public function testLoginSuccess()
     {
         $user = User::factory()->create([
-            'password' => bcrypt('test123')
+            'password' => 'test123'
         ]);
 
         $response = $this->post(self::ROUTE . 'login', ['email' => $user->email, 'password' => 'test123']);
@@ -56,7 +56,7 @@ class AuthControllerTest extends \Tests\TestCase
     public function testRegistrationWithEmailUsed()
     {
         $user = User::factory()->create([
-            'password' => bcrypt('test123')
+            'password' => 'test123'
         ]);
 
         $response = $this->post(

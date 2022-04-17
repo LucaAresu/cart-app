@@ -24,7 +24,7 @@ class AuthController extends AbstractApiController
 
         $user = User::create([
             'name' => $data['name'],
-            'password' => bcrypt($data['password']),
+            'password' => $data['password'],
             'email' => $data['email']
         ]);
         Auth::attempt($data);

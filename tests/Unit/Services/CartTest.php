@@ -144,7 +144,7 @@ class CartTest extends TestCase
         ]);
         $this->assertModelExists($cart);
     }
-    
+
     public function testRemoveProductDontExist()
     {
         $user = User::factory()->hasCarts(1)->create();

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create([
             'email' => 'prova@example.net',
-            'password' => bcrypt('fsamofas')
+            'password' => 'fsamofas'
         ])->each(function ($user) {
             Cart::factory(2)
                 ->hasProducts(2)

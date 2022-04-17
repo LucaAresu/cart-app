@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(\App\Services\CartInterface::class, \App\Services\Cart::class);
+        $this->app->bind(\App\Services\LogInterface::class, \App\Services\Log::class);
     }
 
     /**
