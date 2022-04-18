@@ -23,6 +23,7 @@ class CartController extends AbstractApiController
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws \Illuminate\Validation\ValidationException
      */
+
     public function create() : JsonResponse
     {
         request()->validate([
@@ -46,7 +47,7 @@ class CartController extends AbstractApiController
     public function delete()  : JsonResponse
     {
         $data = request()->validate([
-            'cart' => ['required', 'exists:carts,id,user_id,' . auth()->user()->id],
+            'cart' => ['required', 'exists:carts,id,deleted_at,NULL,user_id,' . auth()->user()->id],
         ]);
 
         $this->cart->delete($data['cart'], auth()->user()->id);
@@ -58,7 +59,7 @@ class CartController extends AbstractApiController
     {
         Validator::validate(
             ['cart' => $cart->id],
-            ['cart' => ['required', 'exists:carts,id,user_id,' . auth()->user()->id]]
+            ['cart' => ['required', 'exists:carts,id,deleted_at,NULL,user_id,' . auth()->user()->id]]
         );
 
         $cart->load('products')
