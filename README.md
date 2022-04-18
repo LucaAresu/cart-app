@@ -15,4 +15,8 @@ Only a logged user can manage carts.
 - ./vendor/bin/sail up (must have Docker)
 
 
+## Api documentation
+
+visit http:://0.0.0.0/api/documentation
+
 
