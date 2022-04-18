@@ -47,7 +47,7 @@ class CartController extends AbstractApiController
     public function delete()  : JsonResponse
     {
         $data = request()->validate([
-            'cart' => ['required', 'exists:carts,id,deleted_at,NULL,user_id,' . auth()->user()->id],
+            'cart' => Cart::getDefaultValidationValues(auth()->user()->id),
         ]);
 
         $this->cart->delete($data['cart'], auth()->user()->id);
@@ -59,7 +59,7 @@ class CartController extends AbstractApiController
     {
         Validator::validate(
             ['cart' => $cart->id],
-            ['cart' => ['required', 'exists:carts,id,deleted_at,NULL,user_id,' . auth()->user()->id]]
+            ['cart' => Cart::getDefaultValidationValues(auth()->user()->id)]
         );
 
         $cart->load('products')

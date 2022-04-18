@@ -24,7 +24,7 @@ class ProductController extends AbstractApiController
     public function addProducts() : JsonResponse
     {
         $data = request()->validate([
-            'cart' => ['required', 'exists:carts,id,user_id,' . auth()->user()->id],
+            'cart' => Cart::getDefaultValidationValues(auth()->user()->id),
             'skus' => ['required', 'array', 'min:1'],
             'skus.*' => ['required', 'exists:products,sku']
         ]);
@@ -43,7 +43,7 @@ class ProductController extends AbstractApiController
     public function removeProducts() : JsonResponse
     {
         $data = request()->validate([
-            'cart' => ['required', 'exists:carts,id,user_id,' . auth()->user()->id],
+            'cart' => Cart::getDefaultValidationValues(auth()->user()->id),
             'skus' => ['required', 'array', 'min:1'],
             'skus.*' => ['required', 'exists:products,sku']
         ]);

@@ -42,4 +42,12 @@ class Cart extends Model
     {
         return $this->belongsToMany(Product::class)->using(\App\Models\Pivot\CartProduct::class);
     }
+
+    public static function getDefaultValidationValues($userId)
+    {
+        return [
+            'required',
+            'exists:carts,id,deleted_at,NULL,user_id,' . $userId
+        ];
+    }
 }
