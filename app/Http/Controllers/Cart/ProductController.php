@@ -29,7 +29,7 @@ class ProductController extends AbstractApiController
             'skus.*' => ['required', 'exists:products,sku']
         ]);
 
-        $cart = Cart::find($data['cart']);
+        $cart = Cart::findOrFail($data['cart']);
 
         $this->cart->addProducts($cart, $this->getProductIds($data['skus']));
 
@@ -48,7 +48,7 @@ class ProductController extends AbstractApiController
             'skus.*' => ['required', 'exists:products,sku']
         ]);
 
-        $cart = Cart::find($data['cart']);
+        $cart = Cart::findOrFail($data['cart']);
 
         $this->cart->removeProducts($cart, $this->getProductIds($data['skus']));
 
