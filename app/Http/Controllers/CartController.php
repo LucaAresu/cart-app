@@ -55,6 +55,10 @@ class CartController extends AbstractApiController
         return $this->getValidResponse(['message' => 'Cart deleted successfully']);
     }
 
+    /**
+     * @param Cart $cart
+     * @return JsonResponse
+     */
     public function show(Cart $cart) : JsonResponse
     {
         Validator::validate(
@@ -68,6 +72,9 @@ class CartController extends AbstractApiController
         return $this->getValidResponse(['cart' => $cart]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function getList() : JsonResponse
     {
         $carts = Cart::with('products')

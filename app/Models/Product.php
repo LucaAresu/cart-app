@@ -12,6 +12,9 @@ class Product extends Model
 
     protected $hidden = ['pivot', 'id', 'deleted_at'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function carts()
     {
         return $this->belongsToMany(Cart::class)->using(\App\Models\Pivot\CartProduct::class);

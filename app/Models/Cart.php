@@ -38,12 +38,19 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function products()
     {
         return $this->belongsToMany(Product::class)->using(\App\Models\Pivot\CartProduct::class);
     }
 
-    public static function getDefaultValidationValues($userId)
+    /**
+     * @param $userId
+     * @return string[]
+     */
+    public static function getDefaultValidationValues($userId) : array
     {
         return [
             'required',

@@ -23,7 +23,11 @@ class Log extends Model
 
     protected $fillable = ['cart_id', 'user_id', 'product_id', 'action'];
 
-    public function getActionAttribute($value)
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getActionAttribute(string $value) : string
     {
         return self::ACTION_LABELS[$value] ?? $value;
     }

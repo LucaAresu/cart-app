@@ -19,6 +19,10 @@ class CartObserver
         $this->logger->cartCreated($cart);
     }
 
+    /**
+     * @param Cart $cart
+     * @return void
+     */
     public function deleted(Cart $cart) : void
     {
         $this->logger->cartDeleted($cart);
